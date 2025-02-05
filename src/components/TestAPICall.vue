@@ -1,37 +1,45 @@
 <template>
-  <div v-for="post in posts_selected" :key="post.id">
-    <!-- <h2>{{ post.id }} {{ post.title }}</h2>
-    <p>{{ post.body }}</p> -->
-    <fwb-card>
-      <div class="p-5">
-        <h5
-          class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
-        >
-          {{ post.id }} {{ post.title }}
-        </h5>
-        <p class="font-normal text-gray-700 dark:text-gray-400">
-          {{ post.body }}
-        </p>
-      </div>
-    </fwb-card>
-  </div>
+  <div class="px-6 py-8">
+    <div class="flex justify-between container mx-auto">
+      <div class="w-full lg:w-8/12">
+        <div v-for="post in posts_selected" :key="post.id">
+          <fwb-card>
+            <div class="p-5">
+              <h5
+                class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+              >
+                {{ post.id }} {{ post.title }}
+              </h5>
+              <p class="font-normal text-gray-700 dark:text-gray-400">
+                {{ post.body }}
+              </p>
+            </div>
+          </fwb-card>
+        </div>
 
-  <fwb-pagination v-model="currentPage" :total-items=elemTotal :show-labels="false">
-    <template #prev-icon>⬅️</template>
-    <template #next-icon>➡️</template>
-    <template v-slot:page-button="{ page, setPage }">
-      <button
-        @click="
-          setPage(page);
-          performAction(currentPage);
-        "
-        class="flex items-center justify-center first:rounded-l-lg last:rounded-r-lg px-3 h-8 ml-0 leading-tight text-gray-500 bg-purple-200 border border-purple-300 hover:bg-purple-300 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-      >
-        {{ page }}
-      </button>
-    </template>
-  </fwb-pagination>
-  Current page: {{ currentPage }}
+        <fwb-pagination
+          v-model="currentPage"
+          :total-items="elemTotal"
+          :show-labels="false"
+        >
+          <template #prev-icon>⬅️</template>
+          <template #next-icon>➡️</template>
+          <template v-slot:page-button="{ page, setPage }">
+            <button
+              @click="
+                setPage(page);
+                performAction(currentPage);
+              "
+              class="flex items-center justify-center first:rounded-l-lg last:rounded-r-lg px-3 h-8 ml-0 leading-tight text-gray-500 bg-purple-200 border border-purple-300 hover:bg-purple-300 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            >
+              {{ page }}
+            </button>
+          </template>
+        </fwb-pagination>
+        Current page: {{ currentPage }}
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -65,9 +73,7 @@ export default {
         );
 
         this.elemTotal = this.posts.length;
-
       });
-
   },
   methods: {
     performAction(currentPage) {

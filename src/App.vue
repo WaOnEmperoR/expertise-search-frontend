@@ -34,17 +34,23 @@ import HelloWorld from './components/HelloWorld.vue'
 </template> -->
 
 <template>
-  <div id="app">
-    <NavBar />
+  <div id="frontend-app">
+    <NavBarMeraki />
     <router-view />
+    <FooterMeraki />
   </div>
 </template>
 
 <script type="text/javascript">
 import NavBar from "./components/NavBar.vue";
+import NavBarMeraki from "./components/NavBarMeraki.vue";
+import FooterMeraki from "./components/FooterMeraki.vue";
+
 export default {
   components: {
     NavBar, // register component
+    NavBarMeraki,
+    FooterMeraki
   },
 };
 </script>

@@ -1,20 +1,26 @@
 <!-- Vue component -->
 <template>
-  <div>
-    <label class="typo__label">Single select / dropdown</label>
-    <div>
-      <multiselect
-        v-model="value"
-        placeholder="country name?"
-        label="country_name"
-        track-by="country_code"
-        :options="options"
-        :multiple="true"
-        :taggable="true"
-      ></multiselect>
-    </div>
+  <div class="px-6 py-8">
+    <div class="flex justify-between container mx-auto">
+      <div class="w-full lg:w-8/12">
+        <div>
+          <label class="typo__label">Single select / dropdown</label>
+          <div>
+            <multiselect
+              v-model="value"
+              placeholder="country name?"
+              label="country_name"
+              track-by="country_code"
+              :options="options"
+              :multiple="true"
+              :taggable="true"
+            ></multiselect>
+          </div>
 
-    <pre class="language-json"><code>{{ value }}</code></pre>
+          <pre class="language-json"><code>{{ value }}</code></pre>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 

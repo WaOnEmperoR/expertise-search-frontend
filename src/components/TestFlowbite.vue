@@ -3,6 +3,7 @@
     <div class="flex justify-between container mx-auto">
       <div class="w-full lg:w-8/12">
         <fwb-card
+          class="!max-w-full"
           img-alt="Desk"
           img-src="https://flowbite.com/docs/images/blog/image-1.jpg"
           variant="image"

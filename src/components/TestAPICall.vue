@@ -2,8 +2,8 @@
   <div class="px-6 py-8">
     <div class="flex justify-between container mx-auto">
       <div class="w-full lg:w-8/12">
-        <div v-for="post in posts_selected" :key="post.id">
-          <fwb-card>
+        <div class="mt-6" v-for="post in posts_selected" :key="post.id">
+          <!-- <fwb-card class="max-w-full">
             <div class="p-5">
               <h5
                 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
@@ -14,29 +14,32 @@
                 {{ post.body }}
               </p>
             </div>
-          </fwb-card>
+          </fwb-card> -->
+          <Article :data="post"></Article>
         </div>
 
-        <fwb-pagination
-          v-model="currentPage"
-          :total-items="elemTotal"
-          :show-labels="false"
-        >
-          <template #prev-icon>⬅️</template>
-          <template #next-icon>➡️</template>
-          <template v-slot:page-button="{ page, setPage }">
-            <button
-              @click="
-                setPage(page);
-                performAction(currentPage);
-              "
-              class="flex items-center justify-center first:rounded-l-lg last:rounded-r-lg px-3 h-8 ml-0 leading-tight text-gray-500 bg-purple-200 border border-purple-300 hover:bg-purple-300 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-            >
-              {{ page }}
-            </button>
-          </template>
-        </fwb-pagination>
-        Current page: {{ currentPage }}
+        <div class="mt-8">
+          <fwb-pagination
+            v-model="currentPage"
+            :total-items="elemTotal"
+            :show-labels="false"
+          >
+            <template #prev-icon>⬅️</template>
+            <template #next-icon>➡️</template>
+            <template v-slot:page-button="{ page, setPage }">
+              <button
+                @click="
+                  setPage(page);
+                  performAction(currentPage);
+                "
+                class="flex items-center justify-center first:rounded-l-lg last:rounded-r-lg px-3 h-8 ml-0 leading-tight text-gray-500 bg-purple-200 border border-purple-300 hover:bg-purple-300 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              >
+                {{ page }}
+              </button>
+            </template>
+          </fwb-pagination>
+          Current page: {{ currentPage }}
+        </div>
       </div>
     </div>
   </div>
@@ -46,6 +49,7 @@
 import { FwbCard } from "flowbite-vue";
 import { FwbPagination } from "flowbite-vue";
 import { ref } from "vue";
+import Article from "./Article.vue";
 
 const currentPage = ref(1);
 </script>

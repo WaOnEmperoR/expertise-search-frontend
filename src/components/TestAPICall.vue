@@ -1,20 +1,23 @@
 <template>
+  <fwb-button @click="showModal"> Open modal </fwb-button>
+
+  <fwb-modal v-if="isShowModal" @close="closeModal" size="sm" not-escapable="true">
+
+    <template #body>
+      <div class="flex justify-between">
+        <img src="../assets/images/ZZ5H.gif" />
+      </div>
+      <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+        Loading...
+      </p>
+    </template>
+
+  </fwb-modal>
+
   <div class="px-6 py-8">
     <div class="flex justify-between container mx-auto">
       <div class="w-full lg:w-8/12">
         <div class="mt-6" v-for="post in posts_selected" :key="post.id">
-          <!-- <fwb-card class="max-w-full">
-            <div class="p-5">
-              <h5
-                class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
-              >
-                {{ post.id }} {{ post.title }}
-              </h5>
-              <p class="font-normal text-gray-700 dark:text-gray-400">
-                {{ post.body }}
-              </p>
-            </div>
-          </fwb-card> -->
           <Article :data="post"></Article>
         </div>
 
@@ -46,16 +49,22 @@
 </template>
 
 <script setup>
-import { FwbCard } from "flowbite-vue";
-import { FwbPagination } from "flowbite-vue";
+import { FwbCard, FwbModal, FwbPagination, FwbButton } from "flowbite-vue";
 import { ref } from "vue";
 import Article from "./Article.vue";
-
-const currentPage = ref(1);
 </script>
 
 <script>
 import axios from "axios";
+
+const isShowModal = ref(false);
+
+function closeModal() {
+  isShowModal.value = false;
+}
+function showModal() {
+  isShowModal.value = true;
+}
 
 export default {
   data() {
@@ -67,6 +76,8 @@ export default {
     };
   },
   mounted() {
+    showModal();
+
     axios
       .get("https://jsonplaceholder.typicode.com/posts/")
       .then((response) => {
@@ -77,6 +88,13 @@ export default {
         );
 
         this.elemTotal = this.posts.length;
+      })
+      .catch((err) => {
+        console.log(err);
+        // isShowModal.value = false;
+      })
+      .finally(() => {
+        closeModal();
       });
   },
   methods: {

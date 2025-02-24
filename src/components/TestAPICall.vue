@@ -1,18 +1,10 @@
 <template>
-  <fwb-button @click="showModal"> Open modal </fwb-button>
-
-  <fwb-modal v-if="isShowModal" @close="closeModal" size="sm" not-escapable="true">
-
-    <template #body>
-      <div class="flex justify-between">
-        <img src="../assets/images/ZZ5H.gif" />
-      </div>
-      <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-        Loading...
-      </p>
-    </template>
-
-  </fwb-modal>
+  <loading
+    v-model:active="isLoading"
+    :can-cancel="false"
+    :on-cancel="onCancel"
+    :is-full-page="fullPage"
+  />
 
   <div class="px-6 py-8">
     <div class="flex justify-between container mx-auto">
@@ -49,22 +41,15 @@
 </template>
 
 <script setup>
-import { FwbCard, FwbModal, FwbPagination, FwbButton } from "flowbite-vue";
+import { FwbCard, FwbPagination, FwbButton } from "flowbite-vue";
 import { ref } from "vue";
 import Article from "./Article.vue";
 </script>
 
 <script>
 import axios from "axios";
-
-const isShowModal = ref(false);
-
-function closeModal() {
-  isShowModal.value = false;
-}
-function showModal() {
-  isShowModal.value = true;
-}
+import Loading from "vue-loading-overlay";
+import "../../node_modules/vue-loading-overlay/dist/css/index.css";
 
 export default {
   data() {
@@ -73,10 +58,15 @@ export default {
       posts_selected: [],
       pageNow: 1,
       elemTotal: 0,
+      isLoading: false,
+      fullPage: true,
     };
   },
+  components: {
+    Loading,
+  },
   mounted() {
-    showModal();
+    this.isLoading = true;
 
     axios
       .get("https://jsonplaceholder.typicode.com/posts/")
@@ -91,10 +81,9 @@ export default {
       })
       .catch((err) => {
         console.log(err);
-        // isShowModal.value = false;
       })
       .finally(() => {
-        closeModal();
+        this.isLoading = false;
       });
   },
   methods: {

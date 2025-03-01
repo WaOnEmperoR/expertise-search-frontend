@@ -42,6 +42,11 @@
         >
         <a
           class="my-1 text-gray-800 hover:text-blue-500 cursor-pointer px-4"
+          href="/test-fileupload"
+          >Test File Upload</a
+        >
+        <a
+          class="my-1 text-gray-800 hover:text-blue-500 cursor-pointer px-4"
           href="/test-multiselect"
           >MultiSelect</a
         >

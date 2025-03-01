@@ -17,6 +17,9 @@
         <fwb-navbar-link link="/test-apicall">
           Test API Call
         </fwb-navbar-link>
+        <fwb-navbar-link link="/test-fileupload">
+          Test File Upload
+        </fwb-navbar-link>
         <fwb-navbar-link link="about">
           About
         </fwb-navbar-link>

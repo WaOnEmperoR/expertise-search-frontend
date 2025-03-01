@@ -3,6 +3,7 @@ import BlogPage from './components/BlogPage.vue';
 import TestFlowbite from './components/TestFlowbite.vue';
 import TestMultiselect from './components/TestMultiselect.vue';
 import TestAPICall from './components/TestAPICall.vue';
+import FileUpload from './components/FileUpload.vue'
 
 // Define route components
 const routes = [
@@ -10,6 +11,7 @@ const routes = [
   { path: '/test-flowbite', component: TestFlowbite },
   { path: '/test-multiselect', component: TestMultiselect },
   { path: '/test-apicall', component: TestAPICall },
+  { path: '/test-fileupload', component: FileUpload },
 ];
 
 // Create the router instance

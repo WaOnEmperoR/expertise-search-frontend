@@ -2,18 +2,18 @@
   <div class="px-6 py-8">
     <div class="flex justify-between container mx-auto">
       <div class="w-full lg:w-8/12">
+        <fwb-toggle v-model="isDark" label="Toggle Dark/Light Mode" />
         <fwb-file-input
           v-model="file"
           label="Upload file"
           @change="selectedFile"
         />
         <p v-if="file === null">Belum ada berkas yang dipilih</p>
-        <p v-else-if="file != null">{{ file.name }}</p>
         <fwb-button gradient="green-blue" size="md" @click="sumbitFile"
           >Submit File</fwb-button
         >
         <div class="border p-2 mt-3">
-          <p>Preview Here:</p>
+          <p>Pratinjau Citra:</p>
           <template v-if="preview">
             <img :src="preview" class="img-fluid" />
             <!-- <p class="mb-0">file name: {{ image.name }}</p>
@@ -25,15 +25,27 @@
   </div>
 </template>
 
+<style>
+.dark {
+  background: #23232e; 
+  color: #fff;
+}
+</style>
+
 <script setup>
 import { ref } from "vue";
-import { FwbFileInput, FwbButton } from "flowbite-vue";
+import { FwbFileInput, FwbButton, FwbToggle } from "flowbite-vue";
 import axios from "axios";
+import { useDark, useToggle } from "@vueuse/core";
+
+// const toggle = ref(false);
+const isDark = useDark();
+
+const toggleDark = useToggle(isDark);
 </script>
 
 <script>
 const file = ref(null);
-// const preview = ref(null);
 
 export default {
   data() {
@@ -43,7 +55,6 @@ export default {
   },
   methods: {
     selectedFile() {
-     
       if (file) {
         console.log("selected a file");
         console.log(file);
@@ -53,9 +64,7 @@ export default {
           this.preview = e.target.result;
         };
         reader.readAsDataURL(file.value);
-      }
-      else
-      {
+      } else {
         console.log("selected a file");
       }
     },

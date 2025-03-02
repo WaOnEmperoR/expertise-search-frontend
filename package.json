@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vueuse/core": "^12.7.0",
     "axios": "^1.7.9",
     "axios-delay": "^1.0.0-rc6",
     "flowbite": "^2.5.2",

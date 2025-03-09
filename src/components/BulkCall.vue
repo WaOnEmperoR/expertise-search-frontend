@@ -5,6 +5,8 @@
     >Increase Progress</fwb-button
   >
 
+  <br/>
+  
   <fwb-button gradient="green-blue" size="md" @click="submitPostDynamic"
     >Submit Post Dynamic</fwb-button
   >
@@ -20,12 +22,7 @@ import { FwbProgress, FwbButton } from "flowbite-vue";
 export default {
   data() {
     return {
-      progVal: 0,
-      reqList: [
-        { title: "Alice", body: "HHH", userId: 1 },
-        { title: "Bob", body: "III", userId: 2 },
-        { title: "Charles", body: "JJJ", userId: 3 },
-      ],
+      progVal: 0
     };
   },
   methods: {

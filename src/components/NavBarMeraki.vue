@@ -50,6 +50,11 @@
           href="/test-multiselect"
           >MultiSelect</a
         >
+        <a
+          class="my-1 text-gray-800 hover:text-blue-500 cursor-pointer px-4"
+          href="/test-zipupload"
+          >Zip Upload</a
+        >
       </div>
     </div>
   </nav>

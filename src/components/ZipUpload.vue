@@ -1,18 +1,59 @@
 <template>
   <div class="px-6 py-8">
     <div class="flex justify-between container mx-auto">
-      <div class="w-full lg:w-8/12">
-        <fwb-file-input
-          v-model="file"
-          label="Upload file"
-          @change="selectedFile"
-        />
-        <p v-if="file === null">Belum ada berkas yang dipilih</p>
-        <fwb-button gradient="lime" size="md" @click="sumbitFile">{{
-          submitOrCancel
-        }}</fwb-button>
-        <div v-if="isLoading === true">
-          <fwb-spinner size="10" color="purple" />
+      <div class="flex flex-col w-full">
+        <div class="flex w-full">
+          <!-- Your existing flex div content -->
+          <div
+            style="
+              width: 90%;
+              /* background-color: #f3f4f6; */
+              padding: 0.5rem;
+              margin-right: 0.15rem;
+            "
+          >
+            <fwb-file-input
+              v-model="file"
+              label="Upload Zip file"
+              @change="selectedFile"
+            />
+            <p v-if="file === null">Belum ada berkas yang dipilih</p>
+          </div>
+          <div
+            style="
+              width: 10%;
+              /* background-color: #f3f4f6; */
+              padding: 0.5rem;
+              margin-left: 0.15rem;
+              margin-top: 2rem;
+            "
+          >
+            <fwb-button
+              gradient="lime"
+              size="md"
+              @click="submitFile"
+              class="w-full block flex-grow"
+              >{{ submitOrCancel }}</fwb-button
+            >
+          </div>
+        </div>
+        <div>
+          <p>Pilih Model</p>
+          <div class="flex flex-col">
+            <fwb-radio v-model="picked" name="radio" label="AID" value="aid" />
+            <fwb-radio
+              v-model="picked"
+              name="radio"
+              label="UC-Merced"
+              value="ucm"
+            />
+          </div>
+
+          <div class="flex items-center justify-center h-24 bg-gray-100">
+            <div v-if="isLoading === true" class="bg-blue-500 p-4 text-white">
+              <fwb-spinner size="10" color="purple" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -30,6 +71,7 @@ import {
   FwbToggle,
   FwbSpinner,
   FwbProgress,
+  FwbRadio,
 } from "flowbite-vue";
 import axios from "axios";
 import { useDark, useToggle } from "@vueuse/core";
@@ -37,6 +79,7 @@ import { useDark, useToggle } from "@vueuse/core";
 
 <script>
 const file = ref(null);
+const picked = ref("aid");
 let controller;
 
 export default {
@@ -52,11 +95,12 @@ export default {
       if (file) {
         console.log("selected a file");
         console.log(file);
+        console.log(picked.value);
       } else {
         console.log("no file selected");
       }
     },
-    sumbitFile() {
+    submitFile() {
       controller = new AbortController();
 
       // Сondition to cancel the request at loading time. On the first pass or after canceling the download, the condition will not be satisfied
@@ -73,7 +117,7 @@ export default {
 
       const formData = new FormData();
       formData.append("file", file.value);
-      formData.append("model", "aid");
+      formData.append("model", picked.value);
 
       axios
         .post(

@@ -38,6 +38,11 @@
           </div>
         </div>
         <div>
+          <download-csv :data="json_data">
+            <img src="../assets/images/download_icon.png" width="50" height="50">
+          </download-csv>
+        </div>
+        <div>
           <p>Pilih Model</p>
           <div class="flex flex-col">
             <fwb-radio
@@ -128,15 +133,34 @@ export default {
       ucmClasses: jsonData["uc_merced"],
       isDisabled: false,
       resTable: null,
+      json_data: [
+        {
+          name: "Tony Peña",
+          city: "New York",
+          country: "United States",
+          birthdate: "1978-03-15",
+          phone: {
+            mobile: "1-541-754-3010",
+            landline: "(541) 754-3010",
+          },
+        },
+        {
+          name: "Thessaloniki",
+          city: "Athens",
+          country: "Greece",
+          birthdate: "1987-11-23",
+          phone: {
+            mobile: "+1 855 275 5071",
+            landline: "(2741) 2621-244",
+          },
+        },
+      ],
     };
   },
   methods: {
     selectedFile() {
       if (file) {
         console.log("selected a file");
-        // console.log(file);
-        // console.log(picked.value);
-        // console.log(this.aidClasses);
       } else {
         console.log("no file selected");
       }
@@ -177,7 +201,7 @@ export default {
           }
         )
         .then((response) => {
-          // console.log(response.data.results); // Handle successful upload response
+          console.log(response.data.results); // Handle successful upload response
 
           var results = response.data.results;
 
@@ -194,10 +218,23 @@ export default {
               }
             }
 
+            var assignedClass = "unclassified";
+
+            switch (picked.value) {
+              case "aid":
+                assignedClass = this.aidClasses[idxMaxi];
+                break;
+              case "ucm":
+                assignedClass = this.ucmClasses[idxMaxi];
+                break;
+              default:
+                break;
+            }
+
             classPreds.push({
               filename: filename,
               score: maxi,
-              class: this.aidClasses[idxMaxi],
+              class: assignedClass,
             });
           }
 

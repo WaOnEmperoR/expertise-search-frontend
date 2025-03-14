@@ -37,9 +37,13 @@
             >
           </div>
         </div>
-        <div>
-          <download-csv :data="json_data">
-            <img src="../assets/images/download_icon.png" width="50" height="50">
+        <div v-if="resCSV !== null">
+          <download-csv :data="resCSV">
+            <img
+              src="../assets/images/download_icon.png"
+              width="50"
+              height="50"
+            />
           </download-csv>
         </div>
         <div>
@@ -122,6 +126,7 @@ import { useDark, useToggle } from "@vueuse/core";
 const file = ref(null);
 const picked = ref("aid");
 let controller;
+const testVal = ["La", "Bu", "Ma"];
 
 export default {
   data() {
@@ -133,26 +138,23 @@ export default {
       ucmClasses: jsonData["uc_merced"],
       isDisabled: false,
       resTable: null,
+      resCSV: null,
       json_data: [
         {
           name: "Tony Peña",
           city: "New York",
           country: "United States",
           birthdate: "1978-03-15",
-          phone: {
-            mobile: "1-541-754-3010",
-            landline: "(541) 754-3010",
-          },
+          phone: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
+          [testVal[1]]: 10,
         },
         {
           name: "Thessaloniki",
           city: "Athens",
           country: "Greece",
           birthdate: "1987-11-23",
-          phone: {
-            mobile: "+1 855 275 5071",
-            landline: "(2741) 2621-244",
-          },
+          phone: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
+          [testVal[1]]: 20,
         },
       ],
     };
@@ -179,11 +181,13 @@ export default {
       }
 
       this.resTable = null;
+      this.resCSV = null;
       this.isLoading = true;
       this.isDisabled = true;
       this.submitOrCancel = "Cancel Request";
 
       var classPreds = [];
+      var resultsRow = [];
 
       const formData = new FormData();
       formData.append("file", file.value);
@@ -209,9 +213,18 @@ export default {
             var filename = results[i].filename;
             var preds = results[i].prediction[0];
 
+            var rsRec = {};
+            rsRec["filename"] = filename;
+
             var maxi = 0.0;
             var idxMaxi = 0;
             for (let j = 0; j < preds.length; j++) {
+              if (picked.value == "aid") {
+                rsRec[this.aidClasses[j]] = preds[j];
+              } else if (picked.value == "ucm") {
+                rsRec[this.ucmClasses[j]] = preds[j];
+              }
+
               if (preds[j] > maxi) {
                 maxi = preds[j];
                 idxMaxi = j;
@@ -231,6 +244,7 @@ export default {
                 break;
             }
 
+            resultsRow.push(rsRec);
             classPreds.push({
               filename: filename,
               score: maxi,
@@ -241,6 +255,7 @@ export default {
           console.log(classPreds);
 
           this.resTable = classPreds;
+          this.resCSV = resultsRow;
         })
         .catch((error) => {
           console.error(error); // Handle upload errors

@@ -126,7 +126,6 @@ import { useDark, useToggle } from "@vueuse/core";
 const file = ref(null);
 const picked = ref("aid");
 let controller;
-const testVal = ["La", "Bu", "Ma"];
 
 export default {
   data() {
@@ -138,25 +137,7 @@ export default {
       ucmClasses: jsonData["uc_merced"],
       isDisabled: false,
       resTable: null,
-      resCSV: null,
-      json_data: [
-        {
-          name: "Tony Peña",
-          city: "New York",
-          country: "United States",
-          birthdate: "1978-03-15",
-          phone: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
-          [testVal[1]]: 10,
-        },
-        {
-          name: "Thessaloniki",
-          city: "Athens",
-          country: "Greece",
-          birthdate: "1987-11-23",
-          phone: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
-          [testVal[1]]: 20,
-        },
-      ],
+      resCSV: null
     };
   },
   methods: {
